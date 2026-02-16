@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ERP Financeiro JW v6.5 - Consolidado</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar__row">
+      <h1>🧾 ERP Financeiro JW v6.5 — Consolidado</h1>
+      <div class="topbar__actions">
+        <button class="btn btn--ghost" type="button" onclick="window.location.href='dashboard.html'">⬅️ Dashboard</button>
+        <button id="logoutBtn" class="btn btn--ghost" type="button">🚪 Sair</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top: 18px;">
+    <section class="card">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+        <div>
+          <h2 style="margin:0;">📅 <span id="monthLabel">—</span></h2>
+          <p class="text-muted" style="margin:6px 0 0;">Leitura rápida em 10 segundos: liquidez, bancos, faturas, OPEX e score.</p>
+        </div>
+        <div class="status status--info" id="scoreBox">Score: —</div>
+      </div>
+
+      <div class="kpi-grid" style="margin-top: 14px;">
+        <div class="kpi kpi--highlight">
+          <div class="kpi__title">💧 Liquidez (Saldo)</div>
+          <div class="kpi__value" id="kpiLiquidez">R$ 0,00</div>
+          <small class="text-muted">Renda - (Poupança + Essenciais + Livres + Dívidas)</small>
+        </div>
+
+        <div class="kpi kpi--receita">
+          <div class="kpi__title">💵 Renda</div>
+          <div class="kpi__value" id="kpiRenda">R$ 0,00</div>
+        </div>
+
+        <div class="kpi kpi--poupanca">
+          <div class="kpi__title">🏦 Poupança</div>
+          <div class="kpi__value" id="kpiPoupanca">R$ 0,00</div>
+        </div>
+
+        <div class="kpi kpi--essenciais">
+          <div class="kpi__title">📌 OPEX Essencial</div>
+          <div class="kpi__value" id="kpiEssenciais">R$ 0,00</div>
+        </div>
+
+        <div class="kpi kpi--livres">
+          <div class="kpi__title">🎯 OPEX Discricionário</div>
+          <div class="kpi__value" id="kpiLivres">R$ 0,00</div>
+        </div>
+
+        <div class="kpi kpi--dividas">
+          <div class="kpi__title">⚠️ Dívidas</div>
+          <div class="kpi__value" id="kpiDividas">R$ 0,00</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>🏦 Saldo por Banco</h2>
+      <div id="byBank" class="grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; margin-top: 10px;"></div>
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>💳 Faturas por Banco (Dívidas)</h2>
+      <div id="cardBills" class="grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; margin-top: 10px;"></div>
+      <p class="text-muted" style="margin-top: 10px;">Heurística: soma de lançamentos tipo "divida" agrupada por banco.</p>
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>🚦 Saúde Financeira</h2>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top: 10px;">
+        <span id="healthPoupanca" class="status status--info">Poupança: —</span>
+        <span id="healthEndividamento" class="status status--info">Endividamento: —</span>
+        <span id="healthEssenciais" class="status status--info">Essenciais: —</span>
+      </div>
+    </section>
+  </main>
+
+  <!-- SCRIPTS -->
+  <script src="js/constantes.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/consolidado.js"></script>
+</body>
+</html>

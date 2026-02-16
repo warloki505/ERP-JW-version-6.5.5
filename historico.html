@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ERP Financeiro JW v6.5 - Histórico de Meses</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="container topbar__row">
+      <h1>💰 ERP Financeiro JW v6.5</h1>
+      <div class="topbar__actions">
+        <button onclick="location.href='dashboard.html'" class="btn btn--ghost">← Voltar ao Dashboard</button>
+        <button id="logoutBtn" class="btn btn--ghost">🚪 Sair</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="margin-top: 24px;">
+    
+    <section class="card">
+      <h2>📊 HISTÓRICO DE MESES</h2>
+      <p class="text-muted">Visualize e compare seus dados financeiros ao longo do tempo</p>
+    </section>
+
+    <!-- LISTA DE MESES -->
+    <div id="monthsList">
+      <div class="card" style="text-align: center; padding: 60px;">
+        <p class="text-muted">Carregando histórico...</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SCRIPTS -->
+  <script src="js/constantes.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/historico.js"></script>
+</body>
+</html>

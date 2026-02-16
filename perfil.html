@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ERP Financeiro - Perfil Financeiro v6.5</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="container topbar__row">
+      <h1>💰 ERP Financeiro JW v6.5</h1>
+      <div class="topbar__actions">
+        <button onclick="location.href='dashboard.html'" class="btn btn--ghost">← Voltar ao Dashboard</button>
+        <button id="logoutBtn" class="btn btn--ghost">🚪 Sair</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="max-width: 900px; margin-top: 24px;">
+
+    <!-- INFORMAÇÕES DO USUÁRIO -->
+    <section class="card">
+      <h2>👤 INFORMAÇÕES DO USUÁRIO</h2>
+      <div class="form profile-info-grid">
+        <div class="form-group profile-info--full">
+          <label>Nome</label>
+          <input type="text" id="displayNome" readonly class="input--readonly profile-input" />
+        </div>
+
+        <div class="form-group">
+          <label>E-mail</label>
+          <input type="email" id="displayEmail" readonly class="input--readonly profile-input" />
+        </div>
+
+        <div class="form-group">
+          <label>Conta criada em</label>
+          <input type="text" id="displayDataCriacao" readonly class="input--readonly profile-input" />
+        </div>
+      </div>
+    </section>
+
+    <!-- PERFIL FINANCEIRO -->
+    <section class="card">
+      <h2>📊 PERFIL FINANCEIRO</h2>
+      <p class="text-muted" style="margin-bottom: 20px;">
+        Defina seu perfil e como deseja distribuir sua renda mensalmente (planejamento).
+      </p>
+
+      <form id="formPerfil" class="form">
+        <div class="form-group">
+          <label for="tipoPerfil">Tipo de Perfil</label>
+          <select id="tipoPerfil" required>
+            <option value="">Selecione seu perfil</option>
+          </select>
+          <small class="text-muted">Cada perfil tem percentuais sugeridos diferentes</small>
+        </div>
+
+        <div class="form-group">
+          <label for="percDespesasEssenciais">Despesas Essenciais (%)</label>
+          <input type="number" id="percDespesasEssenciais" min="0" max="100" step="1" placeholder="Ex: 50" required />
+          <small class="text-muted">Moradia, alimentação, transporte, saúde...</small>
+        </div>
+
+        <div class="form-group">
+          <label for="percDespesasLivres">Despesas Livres (%)</label>
+          <input type="number" id="percDespesasLivres" min="0" max="100" step="1" placeholder="Ex: 30" required />
+          <small class="text-muted">Lazer, entretenimento, extras...</small>
+        </div>
+
+        <div class="form-group">
+          <label for="percPoupanca">Poupança / Investimentos (%)</label>
+          <input type="number" id="percPoupanca" min="0" max="100" step="1" placeholder="Ex: 20" required />
+          <small class="text-muted">Reserva de emergência, investimentos...</small>
+        </div>
+
+        <div class="form-group">
+          <label for="percQuitacaoDividas">% para quitar dívidas</label>
+          <input type="number" id="percQuitacaoDividas" min="0" max="100" step="1" placeholder="Ex: 10" required />
+          <small class="text-muted">Planejamento educacional. (Não automatiza nada no dashboard)</small>
+        </div>
+
+        <div id="totalPerc" class="status status--info profile-kpi">
+          Total: <strong>0%</strong>
+        </div>
+
+        <button type="submit" class="btn btn--primary" style="width: 100%; margin-top: 8px;">
+          💾 Salvar Perfil Financeiro
+        </button>
+      </form>
+    </section>
+
+    <!-- PERFIS SUGERIDOS -->
+    <section class="card">
+      <h2>💡 PERFIS SUGERIDOS</h2>
+      <div style="display: grid; gap: 16px;">
+
+        <div class="suggestion-box">
+          <h3 style="margin-bottom: 8px;">🎯 Responsável</h3>
+          <p class="text-muted" style="font-size: 13px; margin-bottom: 12px;">
+            Equilíbrio entre segurança e qualidade de vida
+          </p>
+          <div class="suggestion-badges">
+            <span class="badge badge-despesa">50% Essenciais</span>
+            <span class="badge badge-despesa">25% Livres</span>
+            <span class="badge badge-poupanca">15% Poupança</span>
+            <span class="badge badge-divida">10% Quitar Dívidas</span>
+          </div>
+          <button onclick="aplicarPerfil('responsavel')" class="btn btn--ghost btn-mini" style="margin-top: 12px;">
+            Aplicar este perfil
+          </button>
+        </div>
+
+        <div class="suggestion-box">
+          <h3 style="margin-bottom: 8px;">🛡️ Conservador</h3>
+          <p class="text-muted" style="font-size: 13px; margin-bottom: 12px;">
+            Máxima segurança financeira e reservas
+          </p>
+          <div class="suggestion-badges">
+            <span class="badge badge-despesa">55% Essenciais</span>
+            <span class="badge badge-despesa">15% Livres</span>
+            <span class="badge badge-poupanca">20% Poupança</span>
+            <span class="badge badge-divida">10% Quitar Dívidas</span>
+          </div>
+          <button onclick="aplicarPerfil('conservador')" class="btn btn--ghost btn-mini" style="margin-top: 12px;">
+            Aplicar este perfil
+          </button>
+        </div>
+
+        <div class="suggestion-box">
+          <h3 style="margin-bottom: 8px;">🌟 Livre</h3>
+          <p class="text-muted" style="font-size: 13px; margin-bottom: 12px;">
+            Mais liberdade, sem perder um mínimo de disciplina
+          </p>
+          <div class="suggestion-badges">
+            <span class="badge badge-despesa">45% Essenciais</span>
+            <span class="badge badge-despesa">35% Livres</span>
+            <span class="badge badge-poupanca">10% Poupança</span>
+            <span class="badge badge-divida">10% Quitar Dívidas</span>
+          </div>
+          <button onclick="aplicarPerfil('livre')" class="btn btn--ghost btn-mini" style="margin-top: 12px;">
+            Aplicar este perfil
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- GERENCIADORES (v6.5) -->
+    <section class="card">
+      <h2>⚙️ GERENCIADORES (v6.5)</h2>
+      <p class="text-muted" style="margin-top: 0;">
+        Personalize as listas do sistema. Você pode <strong>ativar/desativar</strong> e <strong>renomear</strong> itens existentes.
+        <br /><small>Obs.: não cria novos itens e não apaga histórico.</small>
+      </p>
+
+      <div class="manager-grid">
+        <!-- Categorias -->
+        <div class="manager-card">
+          <div class="manager-header">
+            <h3 style="margin:0;">📌 Categorias</h3>
+            <select id="catGrupo" class="manager-select">
+              <option value="receita">Receita</option>
+              <option value="poupanca">Poupança</option>
+              <option value="despesa_essencial">Despesa Essencial</option>
+              <option value="despesa_livre">Despesa Livre</option>
+              <option value="divida">Dívidas</option>
+            </select>
+          </div>
+
+          <div id="catLista" class="manager-list"></div>
+
+          <div class="manager-actions">
+            <button id="btnSalvarCats" class="btn btn--primary" type="button">Salvar Categorias</button>
+            <button id="btnResetCats" class="btn btn--ghost" type="button">Restaurar padrão</button>
+          </div>
+        </div>
+
+        <!-- Bancos -->
+        <div class="manager-card">
+          <div class="manager-header">
+            <h3 style="margin:0;">🏦 Bancos</h3>
+            <select id="bankTipo" class="manager-select">
+              <option value="receita">Receita</option>
+              <option value="poupanca">Poupança</option>
+              <option value="despesa">Despesa</option>
+              <option value="divida">Dívidas</option>
+            </select>
+          </div>
+
+          <div id="bankLista" class="manager-list"></div>
+
+          <div class="manager-actions">
+            <button id="btnSalvarBanks" class="btn btn--primary" type="button">Salvar Bancos</button>
+            <button id="btnResetBanks" class="btn btn--ghost" type="button">Restaurar padrão</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="status status--info" style="margin-top: 14px;">
+        Dica: as mudanças aparecem nos selects do Dashboard automaticamente ao recarregar a página.
+      </div>
+    </section>
+
+  
+    <!-- BACKUP / EXPORTAÇÃO -->
+    <section class="card" style="margin-top: 20px;">
+      <h2>🧰 Backup e Exportação</h2>
+      <p class="text-muted">Recomendado: exporte um backup (JSON) antes de limpar cache do navegador ou trocar de PC.</p>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top: 10px;">
+        <button id="btnExportBackup" class="btn btn--primary">⬇️ Exportar Backup (JSON)</button>
+        <button id="btnImportBackup" class="btn btn--ghost">⬆️ Importar Backup (JSON)</button>
+        <button id="btnExportCSV" class="btn btn--ghost">📄 Exportar CSV do mês</button>
+
+        <div style="margin-left:auto; display:flex; gap:8px; align-items:center;">
+          <span class="text-muted">Tema</span>
+          <select id="themeMode" class="input" style="min-width: 160px;">
+            <option value="auto">Auto</option>
+            <option value="light">Claro</option>
+            <option value="dark">Escuro</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="backupInfo" class="status status--info" style="margin-top: 12px;">Mês em foco: —</div>
+    </section>
+
+  </main>
+
+  <!-- scripts base (v6.5) -->
+  <script src="js/constantes.js"></script>
+  <script src="js/config.js"></script>
+
+  <!-- SCRIPTS -->
+  <script src="js/constantes.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/perfil.js"></script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ERP Financeiro JW v6.5 - Relatório Completo</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+  <header class="topbar no-print">
+    <div class="container topbar__row">
+      <h1>💰 ERP Financeiro JW v6.5 - Relatórios</h1>
+      <div class="topbar__actions">
+        <button onclick="location.href='dashboard.html'" class="btn btn--ghost">← Dashboard</button>
+        <button id="logoutBtn" class="btn btn--ghost">🚪 Sair</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="margin-top: 24px;">
+    
+    <!-- CABEÇALHO -->
+    <section class="card">
+      <div style="text-align: center;">
+        <h1>📊 RELATÓRIO FINANCEIRO COMPLETO</h1>
+        <h2 style="color: var(--primary); margin: 8px 0;" id="monthLabel"></h2>
+        <p class="text-muted">Gerado em: <span id="dataGeracao"></span></p>
+      </div>
+    </section>
+
+    <!-- RESUMO DOS 6 KPIs -->
+    <section class="card">
+      <h2>💹 RESUMO EXECUTIVO - TODOS OS INDICADORES</h2>
+      <div class="kpi-grid">
+        <div class="kpi kpi--receita">
+          <div class="kpi__title">💵 Renda Total</div>
+          <div class="kpi__value" id="kpiRenda">R$ 0,00</div>
+        </div>
+        <div class="kpi kpi--poupanca">
+          <div class="kpi__title">🏦 Poupança</div>
+          <div class="kpi__value" id="kpiPoupanca">R$ 0,00</div>
+        </div>
+        <div class="kpi kpi--essenciais">
+          <div class="kpi__title">🔴 Essenciais</div>
+          <div class="kpi__value" id="kpiEssenciais">R$ 0,00</div>
+        </div>
+        <div class="kpi kpi--livres">
+          <div class="kpi__title">🟢 Livres</div>
+          <div class="kpi__value" id="kpiLivres">R$ 0,00</div>
+        </div>
+        <div class="kpi kpi--dividas">
+          <div class="kpi__title">💳 DÍVIDAS</div>
+          <div class="kpi__value" id="kpiDividas">R$ 0,00</div>
+          <small>⚠️ Priorize</small>
+        </div>
+        <div class="kpi kpi--highlight">
+          <div class="kpi__title">💎 Saldo</div>
+          <div class="kpi__value" id="kpiSaldo">R$ 0,00</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ANÁLISE PERCENTUAL -->
+    <section class="card">
+      <h2>📈 TAXAS E PERCENTUAIS</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px;">
+        <div style="padding: 12px; border: 1px solid var(--success); border-radius: 8px; background: var(--success-light);">
+          <div style="font-size: 11px; color: var(--success); font-weight: 600; margin-bottom: 4px;">Taxa de Poupança</div>
+          <div id="percPoupanca" style="font-size: 24px; font-weight: 800; color: var(--success);">0%</div>
+        </div>
+        <div style="padding: 12px; border: 1px solid #ea580c; border-radius: 8px; background: #fed7aa;">
+          <div style="font-size: 11px; color: #ea580c; font-weight: 600; margin-bottom: 4px;">Taxa de Essenciais</div>
+          <div id="percEssenciais" style="font-size: 24px; font-weight: 800; color: #ea580c;">0%</div>
+        </div>
+        <div style="padding: 12px; border: 1px solid #d97706; border-radius: 8px; background: #fef3c7;">
+          <div style="font-size: 11px; color: #d97706; font-weight: 600; margin-bottom: 4px;">Taxa de Livres</div>
+          <div id="percLivres" style="font-size: 24px; font-weight: 800; color: #d97706;">0%</div>
+        </div>
+        <div style="padding: 12px; border: 2px solid var(--divida); border-radius: 8px; background: var(--divida-light);">
+          <div style="font-size: 11px; color: var(--divida); font-weight: 700; margin-bottom: 4px;">⚠️ Endividamento</div>
+          <div id="percDividas" style="font-size: 24px; font-weight: 900; color: var(--divida);">0%</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GRÁFICOS -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 24px;">
+      <section class="card">
+        <h3>📊 Distribuição do Orçamento (6 categorias)</h3>
+        <canvas id="chartPizza"></canvas>
+      </section>
+      <section class="card">
+        <h3>📊 Comparativo Geral</h3>
+        <canvas id="chartBarras"></canvas>
+      </section>
+    </div>
+
+    <section class="card">
+      <h3>💳 Despesas por Categoria</h3>
+      <canvas id="chartCategorias"></canvas>
+    </section>
+
+    <section class="card">
+      <h3>⚠️ Distribuição de Dívidas por Tipo</h3>
+      <canvas id="chartDividas"></canvas>
+    </section>
+
+    <section class="card">
+      <h3>📈 Evolução dos Últimos 6 Meses (com Dívidas)</h3>
+      <canvas id="chartEvolucao"></canvas>
+    </section>
+
+    <!-- TABELA -->
+    <section class="card">
+      <h2>📋 LANÇAMENTOS DO MÊS</h2>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>Data</th><th>Tipo</th><th>Categoria</th><th>Valor</th></tr>
+          </thead>
+          <tbody id="tbodyLancamentos"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="footer-actions no-print">
+      <button onclick="window.print()" class="btn btn--primary">🖨️ Gerar PDF</button>
+      <button onclick="location.reload()" class="btn btn--ghost">🔄 Atualizar</button>
+    </section>
+
+  </main>
+
+  <style>
+    @media print {
+      .no-print { display: none !important; }
+      body { background: white; }
+      .card { page-break-inside: avoid; box-shadow: none; border: 1px solid #ddd; }
+      .kpi { border: 1px solid #ddd; }
+      .kpi--dividas { border: 2px solid #dc2626 !important; }
+    }
+  </style>
+
+  <!-- SCRIPTS -->
+  <script src="js/constantes.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/charts.js"></script>
+</body>
+</html>

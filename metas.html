@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ERP Financeiro JW v6.5 - Metas</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar__row">
+      <h1>🎯 ERP Financeiro JW v6.5 — Metas</h1>
+      <div class="topbar__actions">
+        <button class="btn btn--ghost" type="button" onclick="window.location.href='dashboard.html'">⬅️ Dashboard</button>
+        <button id="logoutBtn" class="btn btn--ghost" type="button">🚪 Sair</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top: 18px;">
+    <section class="card">
+      <h2>🎯 Criar Meta</h2>
+
+      <form id="goalForm" class="form-grid" style="margin-top: 10px;">
+        <div class="form-group">
+          <label>Nome</label>
+          <input id="goalName" class="input" placeholder="Ex.: Reserva de Emergência" required />
+        </div>
+
+        <div class="form-group">
+          <label>Tipo</label>
+          <select id="goalType" class="input" required>
+            <option value="poupanca_mes">Poupança do mês</option>
+            <option value="divida_mes">Dívidas do mês (limite)</option>
+            <option value="categoria_mes">Categoria do mês (limite)</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="goalCategoryGroup" style="display:none;">
+          <label>Categoria</label>
+          <input id="goalCategory" class="input" placeholder="Ex.: Streaming e Assinaturas" />
+        </div>
+
+        <div class="form-group">
+          <label>Alvo (R$)</label>
+          <input id="goalTarget" class="input" inputmode="decimal" placeholder="Ex.: 500" required />
+        </div>
+
+        <div class="form-group" style="display:flex; gap:10px; align-items:end;">
+          <button class="btn btn--primary" type="submit">Adicionar</button>
+          <button class="btn btn--ghost" type="button" id="btnResetGoals">Resetar</button>
+        </div>
+      </form>
+
+      <p class="text-muted" style="margin-top:10px;">
+        Regra v6.5 (pragmática): metas são avaliadas no <strong>mês em foco</strong> (selected_month ou mês atual).
+      </p>
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+        <h2 style="margin:0;">📅 <span id="monthLabel">—</span></h2>
+        <button class="btn btn--ghost" id="btnMonthNow">Voltar para mês atual</button>
+      </div>
+
+      <div id="goalsList" style="margin-top: 12px;"></div>
+    </section>
+  </main>
+
+  <!-- SCRIPTS -->
+  <script src="js/constantes.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/metas.js"></script>
+</body>
+</html>
